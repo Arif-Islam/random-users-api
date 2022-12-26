@@ -1,0 +1,34 @@
+[
+    {
+        "id": 1,
+        "gender": "Male",
+        "name": "Adil",
+        "contact": "016XXXXXXXX",
+        "address": "Sylhet, Bangladesh",
+        "photoUrl": "https://xyz.com"
+    },
+    {
+        "id": 2,
+        "gender": "Male",
+        "name": "Minhaj",
+        "contact": "016XXXXXXXX",
+        "address": "Sylhet, Bangladesh",
+        "photoUrl": "https://xyz.com"
+    },
+    {
+        "id": 3,
+        "gender": "Male",
+        "name": "Ahnaf",
+        "contact": "016XXXXXXXX",
+        "address": "Sylhet, Bangladesh",
+        "photoUrl": "https://xyz.com"
+    },
+    {
+        "id": 4,
+        "gender": "Male",
+        "name": "Jawad",
+        "contact": "016XXXXXXXX",
+        "address": "Sylhet, Bangladesh",
+        "photoUrl": "https://xyz.com"
+    }
+]
