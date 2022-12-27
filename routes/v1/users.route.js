@@ -80,6 +80,7 @@ router.route("/update")
                             user.contact = userInfo.contact;
                             user.address = userInfo.address;
                             user.photoUrl = userInfo.photoUrl;
+                            // user = userInfo;
                         }
                     }
                     const newUsers = JSON.stringify(users);
