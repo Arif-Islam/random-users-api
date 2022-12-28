@@ -1,5 +1,6 @@
 const express = require("express");
 const fs = require("fs");
+const { type } = require("os");
 
 const router = express.Router();
 
@@ -97,6 +98,79 @@ router.route("/update")
         }
     })
 
+router.route("/bulk-update")
+    .patch((req, res) => {
+        const users = req.body;
+        let flag = false;
+        for (const user of users) {
+            if (user.id && user.gender && user.name && user.contact && user.address && user.photoUrl) {
+                if (typeof (user.id) === 'number' && typeof (user.gender) === 'string' && typeof (user.name) === 'string' && typeof (user.contact) === 'string' && typeof (user.address) === 'string' && typeof (user.photoUrl) === 'string') {
+                    flag = true;
+                }
+                else {
+                    flag = false;
+                    break;
+                }
+            }
+            else {
+                flag = false;
+                break;
+            }
+        }
+        if (flag) {
+            fs.readFile("random-users.json", (err, data) => {
+                if (data) {
+                    const allUsers = JSON.parse(data);
+                    for (const u of users) {
+                        for (const user of allUsers) {
+                            if (user.id === u.id) {
+                                user.gender = u.gender;
+                                user.name = u.name;
+                                user.contact = u.contact;
+                                user.address = u.address;
+                                user.photoUrl = u.photoUrl;
+                                break;
+                            }
+                        }
+                    }
+                    const updatedUsers = JSON.stringify(allUsers);
+                    fs.writeFile("random-users.json", updatedUsers, (err) => {
+                        if (err) {
+                            console.log('write err', err);
+                        }
+                        else {
+                            res.send(updatedUsers);
+                        }
+                    })
+                }
+            })
+        }
+        else {
+            res.send("Please provide valid information to update!");
+        }
+    })
 
+router.route("/delete")
+    .delete((req, res) => {
+        const id = req.body.id;
+        if (typeof (id) === 'number') {
+            fs.readFile("random-users.json", (err, data) => {
+                const users = JSON.parse(data);
+                const allUsers = users.filter(u => u.id !== id);
+                const newUsers = JSON.stringify(allUsers);
+                fs.writeFile("random-users.json", newUsers, (err) => {
+                    if (err) {
+                        console.log('write err', err);
+                    }
+                    else {
+                        res.send(newUsers);
+                    }
+                })
+            })
+        }
+        else {
+            res.send("Please provide a valid user id!");
+        }
+    })
 
 module.exports = router;
